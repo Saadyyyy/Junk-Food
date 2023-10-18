@@ -98,7 +98,7 @@ func Signup(db *gorm.DB, secretKey []byte) echo.HandlerFunc {
 			return c.JSON(http.StatusInternalServerError, map[string]string{"error": "Failed to generate token"})
 		}
 
-		// Menyertakan ID pengguna dalam respons
+		// Menyertakan ID pengguna dalam response
 		return c.JSON(http.StatusOK, map[string]interface{}{"message": "User created successfully", "token": tokenString, "id": user.ID})
 	}
 }
