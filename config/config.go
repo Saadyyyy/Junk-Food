@@ -30,11 +30,11 @@ func InitializeDatabase(config DatabaseConfig) (*gorm.DB, error) {
 
 	// Migrate tabel pengguna
 	db.AutoMigrate(&model.User{})
-	// db.AutoMigrate(&model.Event{})
-	// db.AutoMigrate(&model.Order{})
-	// db.AutoMigrate(&model.OrderItem{})
-	// db.AutoMigrate(&model.Ticket{})
-	// db.AutoMigrate(&model.Promo{})
+	db.AutoMigrate(&model.Menu{})
+	db.AutoMigrate(&model.Order{})
+	db.AutoMigrate(&model.OrderItem{})
+	db.AutoMigrate(&model.DetailOrder{})
+	db.AutoMigrate(&model.Voucher{})
 
 	return db, nil
 }
