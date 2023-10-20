@@ -11,3 +11,8 @@ type User struct {
 	IsAdmin     bool   `gorm:"default:false" json:"isAdmin"` // Menambahkan nilai default
 	// Events      []Event `gorm:"foreignKey:UserID" json:"events"`
 }
+
+type ChangePasswordRequest struct {
+	CurrentPassword string `json:"currentPassword" binding:"required"`
+	NewPassword     string `json:"newPassword" binding:"required"`
+}
