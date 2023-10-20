@@ -12,5 +12,13 @@ type Menu struct {
 	Description  string  `json:"description"`
 	Price        float32 `json:"price"`
 	Category     string  `json:"category"`
-	UserID       uint    `json:"user_id"` // ID pengguna yang membuat event
+	AvalibleMenu int     `json:"available_menu"`
+	UserID       uint    `json:"user_id"` // ID pengguna yang membuat menu
+}
+
+// Metode untuk mengurangi jumlah Makanan yang tersedia
+func (e *Menu) DecrementMenus(quantity int) {
+	if e.AvalibleMenu >= quantity {
+		e.AvalibleMenu -= quantity
+	}
 }

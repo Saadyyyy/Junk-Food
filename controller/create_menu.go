@@ -43,6 +43,7 @@ func CreateMenu(db *gorm.DB, secretKey []byte) echo.HandlerFunc {
 			Description  string  `json:"description"`
 			Price        float32 `json:"price"`
 			Category     string  `json:"category"`
+			AvalibleMenu int     `json:"available_menu"`
 		}
 
 		if err := c.Bind(&Menu); err != nil {
@@ -57,6 +58,7 @@ func CreateMenu(db *gorm.DB, secretKey []byte) echo.HandlerFunc {
 			Description:  Menu.Description,
 			Price:        Menu.Price,
 			Category:     Menu.Category,
+			AvalibleMenu: Menu.AvalibleMenu,
 			UserID:       user.ID, // Mengaitkan menu dengan pengguna yang membuatnya
 		}
 
