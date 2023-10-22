@@ -9,7 +9,7 @@ type User struct {
 	Password    string `json:"password"`
 	PhoneNumber string `json:"phone_number"`
 	IsAdmin     bool   `gorm:"default:false" json:"is_admin"` // Menambahkan nilai default
-	Events      []Menu `gorm:"foreignKey:UserID" json:"Menu"`
+	Menu        []Menu `gorm:"foreignKey:UserID" json:"Menu"`
 }
 
 // Buat struct untuk permintaan perubahan kata sandi
