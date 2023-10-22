@@ -90,12 +90,12 @@ func BuyMenu(db *gorm.DB, secretKey []byte) echo.HandlerFunc {
 
 		// Menyiapkan respons JSON yang mencakup kode voucher yang digunakan
 		responseData := map[string]interface{}{
-			"error":         false,
-			"message":       "menu purchased successfully",
-			"detailOrderID": detailOrder.ID,            // Mengirimkan ID tiket yang telah dibeli
-			"invoiceNumber": detailOrder.InvoiceNumber, // Mengirimkan nomor invoice
-			"totalCost":     totalCost,                 // Mengirimkan total biaya tiket
-			"kode_voucher":  menuPurchase.KodeVoucher,  // Mengirimkan kode voucher yang digunakan
+			"error":          false,
+			"message":        "menu purchased successfully",
+			"detailOrderID":  detailOrder.ID,            // Mengirimkan ID tiket yang telah dibeli
+			"invoice_number": detailOrder.InvoiceNumber, // Mengirimkan nomor invoice
+			"totalCost":      totalCost,                 // Mengirimkan total biaya tiket
+			"kode_voucher":   menuPurchase.KodeVoucher,  // Mengirimkan kode voucher yang digunakan
 		}
 
 		return c.JSON(http.StatusOK, responseData)
