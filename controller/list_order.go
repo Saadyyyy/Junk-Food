@@ -9,7 +9,7 @@ import (
 	"gorm.io/gorm"
 )
 
-func GetMenus(db *gorm.DB, secretKey []byte) echo.HandlerFunc {
+func GetListOrders(db *gorm.DB, secretKey []byte) echo.HandlerFunc {
 	return func(c echo.Context) error {
 		// Mendapatkan token dari header Authorization
 		tokenString := c.Request().Header.Get("Authorization")
