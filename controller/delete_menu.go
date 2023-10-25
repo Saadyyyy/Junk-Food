@@ -17,6 +17,14 @@ func DeleteMenuByAdmin(db *gorm.DB, secretKey []byte) echo.HandlerFunc {
 			return c.JSON(http.StatusUnauthorized, map[string]interface{}{"error": true, "message": "Authorization token is missing"})
 		}
 
+		// Memeriksa apakah header Authorization mengandung token Bearer
+		if len(tokenString) < 7 || tokenString[:7] != "Bearer " {
+			return c.JSON(http.StatusUnauthorized, map[string]interface{}{"error": true, "message": "Invalid token format. Use 'Bearer [token]'"})
+		}
+
+		// Ekstrak token dari header
+		tokenString = tokenString[7:]
+
 		// Memverifikasi token dan mendapatkan informasi admin yang diautentikasi
 		username, err := middleware.VerifyToken(tokenString, secretKey)
 		if err != nil {
