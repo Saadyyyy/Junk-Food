@@ -26,6 +26,7 @@ func SetupRoutes(e *echo.Echo, db *gorm.DB) {
 	// e.PUT("/user/change-password/:id", controllers.ChangePassword(db, secretKey))
 	e.POST("/menu/create", controller.CreateMenu(db, secretKey))
 	e.GET("/menu", controller.GetMenus(db, secretKey))
+	e.GET("/ojek/list", controller.GetListOrders(db, secretKey))
 	// e.GET("/menu/:id", controllers.GetmenuByID(db, secretKey))
 	// e.PUT("/user/:id", controllers.EditUser(db, secretKey))
 	// e.PUT("/admin/user/:id", controllers.EditUserByAdmin(db, secretKey))
