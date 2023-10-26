@@ -4,8 +4,10 @@ import (
 	"Junk-Food/model"
 	"Junk-Food/routes"
 	"log"
+	"os"
 	"strconv"
 
+	"github.com/joho/godotenv"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 	"gorm.io/driver/mysql"
@@ -41,13 +43,19 @@ func InitializeDatabase(config DatabaseConfig) (*gorm.DB, error) {
 
 func SetupRouter() *echo.Echo {
 	// Inisialisasi database
-	dbConfig := DatabaseConfig{
-		Host:     "localhost",
-		Port:     3306,
-		Username: "saady",
-		Password: "853211",
-		DBName:   "junk_food",
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatalf("Error loading .env file: %v", err)
 	}
+
+	dbConfig := DatabaseConfig{
+		Host: os.Getenv("DBHOST"),
+	}
+	portStr := os.Getenv("DBPORT")
+	dbConfig.Port, _ = strconv.Atoi(portStr)
+	dbConfig.Username = os.Getenv("DBUSER")
+	dbConfig.Password = os.Getenv("DBPASS")
+	dbConfig.DBName = os.Getenv("DBNAME")
 
 	db, err := InitializeDatabase(dbConfig)
 	if err != nil {
