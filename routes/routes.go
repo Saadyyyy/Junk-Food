@@ -34,13 +34,12 @@ func SetupRoutes(e *echo.Echo, db *gorm.DB) {
 	e.DELETE("/admin/user/:id", controller.DeleteMenuByAdmin(db, secretKey))
 	// e.GET("/admin/user", controllers.GetAllUsersByAdmin(db, secretKey))
 	e.POST("/user/buy", controller.BuyMenu(db, secretKey))
-	e.GET("/user/buy", controller.GetOrderItemsByUserID(db, secretKey))
 	// e.GET("/user/ticket", controllers.GetTicketsByUser(db, secretKey))
 	e.POST("/admin/promo", controller.CreatePromo(db, secretKey))
 	// e.GET("/user/promo", controllers.GetPromos(db, secretKey))
 	e.GET("/user/detailOrder/:invoiceNumber", controller.GetDetailTrascation(db, secretKey))
 	makan := controller.NewMakanUsecase()
-	e.POST("/chatbot/recommend-hotel", func(c echo.Context) error {
+	e.POST("/chatbot/recommend-makan", func(c echo.Context) error {
 		return controller.RecommendMakan(c, makan)
 	})
 }
