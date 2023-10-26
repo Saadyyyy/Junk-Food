@@ -28,7 +28,6 @@ func SetupRoutes(e *echo.Echo, db *gorm.DB) {
 	e.GET("/menu", controller.GetMenus(db, secretKey))
 	e.GET("/menu/:id", controller.GetMenuByID(db, secretKey))
 	e.GET("/ojek/list", controller.GetListOrders(db, secretKey))
-	// e.GET("/menu/:id", controllers.GetmenuByID(db, secretKey))
 	// e.PUT("/user/:id", controllers.EditUser(db, secretKey))
 	// e.PUT("/admin/user/:id", controllers.EditUserByAdmin(db, secretKey))
 	e.DELETE("/admin/user/:id", controller.DeleteMenuByAdmin(db, secretKey))
@@ -42,4 +41,7 @@ func SetupRoutes(e *echo.Echo, db *gorm.DB) {
 	e.POST("/chatbot/recommend-makan", func(c echo.Context) error {
 		return controller.RecommendMakan(c, makan)
 	})
+	e.POST("/admin/list-order-admin", controller.CreateOrderDriverByAdmin(db, secretKey))
+	e.POST("/user/list-order-user", controller.CreateOrderDriverByUser(db, secretKey))
+
 }
