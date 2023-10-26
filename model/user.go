@@ -8,8 +8,10 @@ type User struct {
 	Email       string `json:"email"`
 	Password    string `json:"password"`
 	PhoneNumber string `json:"phone_number"`
-	IsAdmin     bool   `gorm:"default:false" json:"is_admin"` // Menambahkan nilai default
-	Menu        []Menu `gorm:"foreignKey:UserID" json:"Menu"`
+	IsAdmin     bool   `gorm:"default:false" json:"is_admin"`  // Menambahkan nilai default
+	IsDriver    bool   `gorm:"default:false" json:"is_driver"` // Menambahkan nilai default
+
+	Menu []Menu `gorm:"foreignKey:UserID" json:"Menu"`
 }
 
 // Buat struct untuk permintaan perubahan kata sandi
