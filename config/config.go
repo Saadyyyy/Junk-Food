@@ -37,6 +37,9 @@ func InitializeDatabase(config DatabaseConfig) (*gorm.DB, error) {
 	db.AutoMigrate(&model.OrderItem{})
 	db.AutoMigrate(&model.DetailOrder{})
 	db.AutoMigrate(&model.Voucher{})
+	db.AutoMigrate(&model.DetailOrder{})
+	db.AutoMigrate(&model.DriverOrderAdmin{})
+	db.AutoMigrate(&model.DriverOrderUser{})
 
 	return db, nil
 }
