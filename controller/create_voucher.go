@@ -9,7 +9,7 @@ import (
 	"gorm.io/gorm"
 )
 
-func CreatePromo(db *gorm.DB, secretKey []byte) echo.HandlerFunc {
+func CreateVoucher(db *gorm.DB, secretKey []byte) echo.HandlerFunc {
 	return func(c echo.Context) error {
 		// Mendapatkan token dari header Authorization
 		tokenString := c.Request().Header.Get("Authorization")
