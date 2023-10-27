@@ -23,7 +23,7 @@ func SetupRoutes(e *echo.Echo, db *gorm.DB) {
 	e.POST("/signup", controller.Signup(db, secretKey))
 	e.POST("/signin", controller.Signin(db, secretKey))
 	// e.GET("/user/:id", controllers.GetUserProfile(db, secretKey))
-	// e.PUT("/user/change-password/:id", controllers.ChangePassword(db, secretKey))
+	e.PUT("/user/change-password/:id", controller.ChangePassword(db, secretKey))
 	// e.POST("/event/create", controllers.CreateEvent(db, secretKey))
 	// e.GET("/event", controllers.GetEvents(db, secretKey))
 	// e.GET("/event/:id", controllers.GetEventByID(db, secretKey))
