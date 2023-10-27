@@ -38,47 +38,35 @@ func CreateOrderDriverByUser(db *gorm.DB, secretKey []byte) echo.HandlerFunc {
 			return c.JSON(http.StatusInternalServerError, map[string]interface{}{"error": true, "message": "Failed to fetch user data"})
 		}
 
-		// Memeriksa apakah pengguna memiliki izin untuk membuat menu (IsDriver=true)
-		if !user.IsDriver {
-			return c.JSON(http.StatusForbidden, map[string]interface{}{"error": true, "message": "Hanya Admin yang dapat menambahkan"})
+		// Menguraikan data order dari JSON yang diterima
+		var order struct {
+			Message          string `json:"message"`
+			PickUpLocation   string `json:"pick-up_location"`
+			DeliveryLocation string `json:"delivery_location"`
+			UserID           uint   `json:"user_id"`
 		}
 
-		// Menguraikan data menu dari JSON yang diterima
-		var Menu struct {
-			NameRestoran string  `json:"name_restoran"`
-			Name         string  `json:"name"`
-			Location     string  `json:"location"`
-			Description  string  `json:"description"`
-			Price        float32 `json:"price"`
-			Category     string  `json:"category"`
-			AvalibleMenu int     `json:"available_menu"`
-		}
-
-		if err := c.Bind(&Menu); err != nil {
+		if err := c.Bind(&order); err != nil {
 			return c.JSON(http.StatusBadRequest, map[string]interface{}{"error": true, "message": err.Error()})
 		}
 
-		// Membuat Menu baru dan mengaitkannya dengan pengguna
-		newMenu := model.Menu{
-			NameRestoran: Menu.NameRestoran,
-			Name:         Menu.Name,
-			Location:     Menu.Location,
-			Description:  Menu.Description,
-			Price:        Menu.Price,
-			Category:     Menu.Category,
-			AvalibleMenu: Menu.AvalibleMenu,
-			UserID:       user.ID, // Mengaitkan menu dengan pengguna yang membuatnya
+		// Membuat order baru dan mengaitkannya dengan pengguna
+		newOrder := model.DriverOrderUser{
+			Message:          order.Message,
+			PickUpLocation:   order.PickUpLocation,
+			DeliveryLocation: order.DeliveryLocation,
+			UserID:           user.ID,
 		}
 
-		if err := db.Create(&newMenu).Error; err != nil {
+		if err := db.Create(&newOrder).Error; err != nil {
 			return c.JSON(http.StatusInternalServerError, map[string]interface{}{"error": true, "message": "Failed to create menu"})
 		}
 
 		// Mengembalikan respons sukses jika berhasil
 		return c.JSON(http.StatusOK, map[string]interface{}{
-			"error":    false,
-			"message":  "menu created successfully",
-			"menuData": newMenu, // Mengirim data menu yang baru saja dibuat
+			"error":     false,
+			"status":    "order created successfully",
+			"orderData": newOrder, // Mengirim data menu yang baru saja dibuat
 		})
 	}
 }
