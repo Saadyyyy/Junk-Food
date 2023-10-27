@@ -9,7 +9,7 @@ import (
 	"gorm.io/gorm"
 )
 
-func CreateOrderDriverByUser(db *gorm.DB, secretKey []byte) echo.HandlerFunc {
+func GetListOrderByAdmin(db *gorm.DB, secretKey []byte) echo.HandlerFunc {
 	return func(c echo.Context) error {
 		// Mendapatkan token dari header Authorization
 		tokenString := c.Request().Header.Get("Authorization")
@@ -38,35 +38,18 @@ func CreateOrderDriverByUser(db *gorm.DB, secretKey []byte) echo.HandlerFunc {
 			return c.JSON(http.StatusInternalServerError, map[string]interface{}{"error": true, "message": "Failed to fetch user data"})
 		}
 
-		// Menguraikan data order dari JSON yang diterima
-		var order struct {
-			Message          string `json:"message"`
-			PickUpLocation   string `json:"pick-up_location"`
-			DeliveryLocation string `json:"delivery_location"`
-			UserID           uint   `json:"user_id"`
+		// Memeriksa apakah admin yang diautentikasi memiliki status IsDriver yang true
+		if !user.IsDriver {
+			return c.JSON(http.StatusForbidden, map[string]interface{}{"error": true, "message": "Anda bukan admin, tidak bisa menghapus data user lain!"})
 		}
 
-		if err := c.Bind(&order); err != nil {
-			return c.JSON(http.StatusBadRequest, map[string]interface{}{"error": true, "message": err.Error()})
+		// Mengambil daftar list dari database dengan detail orders
+		var orders []model.DriverOrderAdmin
+		if err := db.Preload("DetailOrder").Find(&orders).Error; err != nil {
+			return c.JSON(http.StatusInternalServerError, map[string]interface{}{"error": true, "message": "Failed to fetch orders with details"})
 		}
 
-		// Membuat order baru dan mengaitkannya dengan pengguna
-		newOrder := model.DriverOrderUser{
-			Message:          order.Message,
-			PickUpLocation:   order.PickUpLocation,
-			DeliveryLocation: order.DeliveryLocation,
-			UserID:           user.ID,
-		}
-
-		if err := db.Create(&newOrder).Error; err != nil {
-			return c.JSON(http.StatusInternalServerError, map[string]interface{}{"error": true, "message": "Failed to create menu"})
-		}
-
-		// Mengembalikan respons sukses jika berhasil
-		return c.JSON(http.StatusOK, map[string]interface{}{
-			"error":     false,
-			"status":    "order created successfully",
-			"orderData": newOrder, // Mengirim data menu yang baru saja dibuat
-		})
+		// Mengembalikan daftar list dalam format yang diinginkan
+		return c.JSON(http.StatusOK, map[string]interface{}{"error": false, "List_Orders": orders})
 	}
 }
