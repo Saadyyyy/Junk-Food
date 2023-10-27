@@ -54,7 +54,6 @@ func CreateOrderDriverByAdmin(db *gorm.DB, secretKey []byte) echo.HandlerFunc {
 		if err := c.Bind(&order); err != nil {
 			return c.JSON(http.StatusBadRequest, map[string]interface{}{"error": true, "message": err.Error()})
 		}
-
 		// Create a new DriverOrderAdmin instance
 		newOrder := model.DriverOrderAdmin{
 			Message:          order.Message,

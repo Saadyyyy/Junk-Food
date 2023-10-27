@@ -9,13 +9,21 @@ import (
 	"gorm.io/gorm"
 )
 
-func GetListOrders(db *gorm.DB, secretKey []byte) echo.HandlerFunc {
+func GetListOrderByUser(db *gorm.DB, secretKey []byte) echo.HandlerFunc {
 	return func(c echo.Context) error {
 		// Mendapatkan token dari header Authorization
 		tokenString := c.Request().Header.Get("Authorization")
 		if tokenString == "" {
 			return c.JSON(http.StatusUnauthorized, map[string]interface{}{"error": true, "message": "Authorization token is missing"})
 		}
+
+		// Memeriksa apakah header Authorization mengandung token Bearer
+		if len(tokenString) < 7 || tokenString[:7] != "Bearer " {
+			return c.JSON(http.StatusUnauthorized, map[string]interface{}{"error": true, "message": "Invalid token format. Use 'Bearer [token]'"})
+		}
+
+		// Ekstrak token dari header
+		tokenString = tokenString[7:]
 
 		// Memverifikasi token
 		username, err := middleware.VerifyToken(tokenString, secretKey)
@@ -30,13 +38,13 @@ func GetListOrders(db *gorm.DB, secretKey []byte) echo.HandlerFunc {
 			return c.JSON(http.StatusInternalServerError, map[string]interface{}{"error": true, "message": "Failed to fetch user data"})
 		}
 
-		// Mengambil daftar event dari database
-		var menus []model.Menu
-		if err := db.Find(&menus).Error; err != nil {
+		// Mengambil daftar list dari database dengan detail orders
+		var orders []model.DriverOrderUser
+		if err := db.Find(&orders).Error; err != nil {
 			return c.JSON(http.StatusInternalServerError, map[string]interface{}{"error": true, "message": "Failed to fetch menu"})
 		}
 
 		// Mengembalikan daftar event dalam format yang diinginkan
-		return c.JSON(http.StatusOK, map[string]interface{}{"error": false, "events": menus})
+		return c.JSON(http.StatusOK, map[string]interface{}{"error": false, "events": orders})
 	}
 }
