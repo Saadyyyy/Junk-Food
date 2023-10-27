@@ -22,12 +22,11 @@ func SetupRoutes(e *echo.Echo, db *gorm.DB) {
 	// Menggunakan routes yang telah dipisahkan
 	e.POST("/signup", controller.Signup(db, secretKey))
 	e.POST("/signin", controller.Signin(db, secretKey))
-	// e.GET("/user/:id", controllers.GetUserProfile(db, secretKey))
-	// e.PUT("/user/change-password/:id", controllers.ChangePassword(db, secretKey))
+	e.GET("/user/:id", controller.GetUserById(db, secretKey))
+	// e.PUT("/user/change-password/:id", controller.ChangePassword(db, secretKey))
 	e.POST("/menu/create", controller.CreateMenu(db, secretKey))
 	e.GET("/menu", controller.GetMenus(db, secretKey))
 	e.GET("/menu/:id", controller.GetMenuByID(db, secretKey))
-	e.GET("/ojek/list", controller.GetListOrders(db, secretKey))
 	// e.PUT("/user/:id", controllers.EditUser(db, secretKey))
 	// e.PUT("/admin/user/:id", controllers.EditUserByAdmin(db, secretKey))
 	e.DELETE("/admin/user/:id", controller.DeleteMenuByAdmin(db, secretKey))
@@ -43,5 +42,7 @@ func SetupRoutes(e *echo.Echo, db *gorm.DB) {
 	})
 	e.POST("/admin/list-order-admin", controller.CreateOrderDriverByAdmin(db, secretKey))
 	e.POST("/user/list-order-user", controller.CreateOrderDriverByUser(db, secretKey))
+	e.GET("/driver/list-admin", controller.GetListOrderByAdmin(db, secretKey))
+	e.GET("/driver/list-user", controller.GetListOrderByUser(db, secretKey))
 
 }
