@@ -28,7 +28,7 @@ func SetupRoutes(e *echo.Echo, db *gorm.DB) {
 	e.GET("/menu", controller.GetMenus(db, secretKey))
 	e.GET("/menu/:id", controller.GetMenuByID(db, secretKey))
 	e.PUT("/user/:id", controller.EditUser(db, secretKey))
-	e.DELETE("/admin/user/:id", controller.DeleteMenuByAdmin(db, secretKey))
+	e.DELETE("/admin/menu/:id", controller.DeleteMenuByAdmin(db, secretKey))
 	e.POST("/user/buy", controller.BuyMenu(db, secretKey))
 	// e.GET("/user/ticket", controllers.GetTicketsByUser(db, secretKey))
 	e.POST("/admin/promo", controller.CreatePromo(db, secretKey))
