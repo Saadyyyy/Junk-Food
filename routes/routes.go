@@ -30,9 +30,8 @@ func SetupRoutes(e *echo.Echo, db *gorm.DB) {
 	e.PUT("/user/:id", controller.EditUser(db, secretKey))
 	e.DELETE("/admin/menu/:id", controller.DeleteMenuByAdmin(db, secretKey))
 	e.POST("/user/buy", controller.BuyMenu(db, secretKey))
-	// e.GET("/user/ticket", controllers.GetTicketsByUser(db, secretKey))
-	e.POST("/admin/promo", controller.CreatePromo(db, secretKey))
-	// e.GET("/user/promo", controllers.GetPromos(db, secretKey))
+	e.POST("/admin/voucher", controller.CreateVoucher(db, secretKey))
+	e.GET("/user/voucher", controller.GetVouchers(db, secretKey))
 	e.GET("/user/detailOrder/:invoiceNumber", controller.GetDetailTrascation(db, secretKey))
 	makan := controller.NewMakanUsecase()
 	e.POST("/chatbot/recommend-makan", func(c echo.Context) error {
@@ -42,5 +41,5 @@ func SetupRoutes(e *echo.Echo, db *gorm.DB) {
 	e.POST("/user/list-order-user", controller.CreateOrderDriverByUser(db, secretKey))
 	e.GET("/driver/list-admin", controller.GetListOrderByAdmin(db, secretKey))
 	e.GET("/driver/list-user", controller.GetListOrderByUser(db, secretKey))
-
+	e.DELETE("/admin/voucher/:id", controller.DeleteVoucherByAdmin(db, secretKey))
 }
