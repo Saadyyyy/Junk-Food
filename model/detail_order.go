@@ -14,3 +14,16 @@ type DetailOrder struct {
 	InvoiceNumber      string `json:"invoice_number"` // Nomor invoice untuk makanan
 	DriverOrderAdminID uint   // Add a foreign key to establish the relationship
 }
+
+type DetailOrderAdmin struct {
+	gorm.Model
+	DriverOrderAdminID uint   `json:"admin_id"`       // ID pengguna yang membeli makanan
+	InvoiceNumber      string `json:"invoice_number"` // Nomor invoice untuk makanan
+	// DriverOrderAdminID uint   // Add a foreign key to establish the relationship
+}
+type DetailOrderUser struct {
+	gorm.Model
+	DriverOrderUserID uint   `json:""`               // ID pengguna yang membeli makanan
+	InvoiceNumber     string `json:"invoice_number"` // Nomor invoice untuk makanan
+	// DriverOrderAdminID uint   // Add a foreign key to establish the relationship
+}
