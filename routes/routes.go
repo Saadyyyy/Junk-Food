@@ -42,4 +42,7 @@ func SetupRoutes(e *echo.Echo, db *gorm.DB) {
 	e.GET("/driver/list-admin", controller.GetListOrderByAdmin(db, secretKey))
 	e.GET("/driver/list-user", controller.GetListOrderByUser(db, secretKey))
 	e.DELETE("/admin/voucher/:id", controller.DeleteVoucherByAdmin(db, secretKey))
+	e.POST("/driver/admin", controller.TakeOrderAdmin(db, secretKey))
+	e.POST("/driver/user", controller.TakeOrderUser(db, secretKey))
+
 }
