@@ -38,6 +38,8 @@ func InitializeDatabase(config DatabaseConfig) (*gorm.DB, error) {
 	db.AutoMigrate(&model.DetailOrder{})
 	db.AutoMigrate(&model.DriverOrderAdmin{})
 	db.AutoMigrate(&model.DriverOrderUser{})
+	db.AutoMigrate(&model.DetailOrderAdmin{})
+	db.AutoMigrate(&model.DetailOrderUser{})
 
 	return db, nil
 }
