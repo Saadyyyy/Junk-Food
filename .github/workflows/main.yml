@@ -40,7 +40,6 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.SSH_PORT }}
           script: |
-            sudo docker stop restapi  
             sudo docker rm restapi
             sudo docker rmi ${{ secrets.DOCKERHUB_USERNAME }}/min-project:latest
             sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/min-project:latest
