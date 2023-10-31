@@ -73,15 +73,15 @@ func BuyMenu(db *gorm.DB, secretKey []byte) echo.HandlerFunc {
 		totalCost := int(menu.Price) * menuPurchase.Quantity
 
 		// Jika promo ditemukan, menghitung potongan biaya tiket
-		if promo.ID != 0 {
+		if promo.VoucherID != 0 {
 			potongan := (float64(promo.JumlahPotonganPersen) / 100) * float64(totalCost)
 			totalCost -= int(potongan)
 		}
 
 		// Membuat entri baru dalam tabel menu
 		detailOrder := model.DetailOrder{
-			MenuID:        menu.ID,
-			UserID:        user.ID,
+			MenuID:        menu.MenuID,
+			UserID:        user.UserID,
 			Quantity:      menuPurchase.Quantity,
 			TotalCost:     totalCost,                // Total biaya tiket setelah potongan
 			InvoiceNumber: generateInvoiceNumber(),  // Simpan nomor invoice dalam tiket
@@ -100,7 +100,7 @@ func BuyMenu(db *gorm.DB, secretKey []byte) echo.HandlerFunc {
 		responseData := map[string]interface{}{
 			"error":          false,
 			"message":        "menu purchased successfully",
-			"detailOrderID":  detailOrder.ID,            // Mengirimkan ID tiket yang telah dibeli
+			"detailOrderID":  detailOrder.DetailOrderID, // Mengirimkan ID tiket yang telah dibeli
 			"invoice_number": detailOrder.InvoiceNumber, // Mengirimkan nomor invoice
 			"totalCost":      totalCost,                 // Mengirimkan total biaya tiket
 			"kode_voucher":   menuPurchase.KodeVoucher,  // Mengirimkan kode voucher yang digunakan

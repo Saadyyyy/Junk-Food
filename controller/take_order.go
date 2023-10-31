@@ -69,8 +69,8 @@ func TakeOrderAdmin(db *gorm.DB, secretKey []byte) echo.HandlerFunc {
 		// Menyiapkan respons JSON yang mencakup kode voucher yang digunakan
 		responseData := map[string]interface{}{
 			"message":        "Order purchased successfully",
-			"detailOrderID":  detailOrder.ID,            // Mengirimkan ID tiket yang telah dibeli
-			"invoice_number": detailOrder.InvoiceNumber, // Mengirimkan nomor invoice
+			"detailOrderID":  detailOrder.DetailOrderAdminID, // Mengirimkan ID tiket yang telah dibeli
+			"invoice_number": detailOrder.InvoiceNumber,      // Mengirimkan nomor invoice
 		}
 
 		return c.JSON(http.StatusOK, responseData)
@@ -137,8 +137,8 @@ func TakeOrderUser(db *gorm.DB, secretKey []byte) echo.HandlerFunc {
 		// Menyiapkan respons JSON yang mencakup kode voucher yang digunakan
 		responseData := map[string]interface{}{
 			"message":        "Order purchased successfully",
-			"detailOrderID":  detailOrder.ID,            // Mengirimkan ID tiket yang telah dibeli
-			"invoice_number": detailOrder.InvoiceNumber, // Mengirimkan nomor invoice
+			"detailOrderID":  detailOrder.DetailOrderAdminID, // Mengirimkan ID tiket yang telah dibeli
+			"invoice_number": detailOrder.InvoiceNumber,      // Mengirimkan nomor invoice
 		}
 
 		return c.JSON(http.StatusOK, responseData)

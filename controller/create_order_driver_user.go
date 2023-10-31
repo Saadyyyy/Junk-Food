@@ -55,7 +55,7 @@ func CreateOrderDriverByUser(db *gorm.DB, secretKey []byte) echo.HandlerFunc {
 			Message:          order.Message,
 			PickUpLocation:   order.PickUpLocation,
 			DeliveryLocation: order.DeliveryLocation,
-			UserID:           user.ID,
+			UserID:           user.UserID,
 		}
 
 		if err := db.Create(&newOrder).Error; err != nil {

@@ -67,7 +67,7 @@ func CreateMenu(db *gorm.DB, secretKey []byte) echo.HandlerFunc {
 			Price:        Menu.Price,
 			Category:     Menu.Category,
 			AvalibleMenu: Menu.AvalibleMenu,
-			UserID:       user.ID, // Mengaitkan menu dengan pengguna yang membuatnya
+			UserID:       user.UserID, // Mengaitkan menu dengan pengguna yang membuatnya
 		}
 
 		if err := db.Create(&newMenu).Error; err != nil {

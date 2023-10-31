@@ -41,7 +41,7 @@ func GetUserById(db *gorm.DB, secretKey []byte) echo.HandlerFunc {
 
 		// Mengembalikan data pengguna dalam format yang diinginkan
 		userData := map[string]interface{}{
-			"id":           user.ID,
+			"id":           user.UserID,
 			"username":     user.Username,
 			"phone_number": user.PhoneNumber,
 			"email":        user.Email,
