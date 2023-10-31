@@ -45,4 +45,6 @@ jobs:
             sudo docker rmi ${{ secrets.DOCKERHUB_USERNAME }}/min-project:latest
             sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/min-project:latest
             sudo chmod 777 /var/run/docker.sock
+            sudo service --status-all 
+            sudo service docker start
             sudo docker run -d -p 8001:8001 -e OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }} -e DBUSER=${{ secrets.DB_USERNAME }} -e DBPASS=${{ secrets.DB_PASSWORD }} -e DBHOST=${{ secrets.DB_HOST }} -e DBPORT=${{ secrets.DB_PORT }} -e DBNAME=${{ secrets.DB_NAME }} -e SECRET_JWT=${{ secrets.SECRET_KEY }} --name restapi ${{ secrets.DOCKERHUB_USERNAME }}/min-project:latest
