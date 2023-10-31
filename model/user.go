@@ -1,9 +1,9 @@
 package model
 
-import "time"
+import "gorm.io/gorm"
 
 type User struct {
-	UserID      uint
+	gorm.Model
 	Username    string `json:"username"`
 	Email       string `json:"email"`
 	Password    string `json:"password"`
@@ -11,9 +11,7 @@ type User struct {
 	IsAdmin     bool   `gorm:"default:false" json:"is_admin"`  // Menambahkan nilai default
 	IsDriver    bool   `gorm:"default:false" json:"is_driver"` // Menambahkan nilai default
 
-	Menu      []Menu     `gorm:"foreignKey:UserID" json:"Menu"`
-	CreatedAt *time.Time `json:"created_at"` // Kolom created_at yang diharapkan tipe data *time.Time
-	UpdatedAt time.Time
+	Menu []Menu `gorm:"foreignKey:UserID" json:"Menu"`
 }
 
 // Buat struct untuk permintaan perubahan kata sandi
