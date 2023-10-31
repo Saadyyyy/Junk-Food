@@ -7,6 +7,7 @@ COPY go.sum ./
 RUN go mod download
 
 COPY . .
+
 COPY .env .  
 
 RUN go build -o saady .
