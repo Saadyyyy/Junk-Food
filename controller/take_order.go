@@ -48,7 +48,7 @@ func TakeOrderAdmin(db *gorm.DB, secretKey []byte) echo.HandlerFunc {
 		}
 
 		// Memeriksa apakah menu yang akan dibeli tiketnya ada
-		var menu model.Menu
+		var menu model.DriverOrderAdmin
 		menuResult := db.First(&menu, menuPurchase.AdminID)
 		if menuResult.Error != nil {
 			return c.JSON(http.StatusNotFound, map[string]interface{}{"error": true, "message": "menu not found"})
@@ -108,7 +108,7 @@ func TakeOrderUser(db *gorm.DB, secretKey []byte) echo.HandlerFunc {
 
 		// Menguraikan data pembelian tiket dari JSON yang diterima
 		var menuPurchase struct {
-			ListOrder uint `json:"list_order"`
+			AdminID uint `json:"list_order"`
 		}
 
 		if err := c.Bind(&menuPurchase); err != nil {
@@ -116,15 +116,15 @@ func TakeOrderUser(db *gorm.DB, secretKey []byte) echo.HandlerFunc {
 		}
 
 		// Memeriksa apakah menu yang akan dibeli tiketnya ada
-		var menu model.Menu
-		menuResult := db.First(&menu, menuPurchase.ListOrder)
+		var menu model.DriverOrderUser
+		menuResult := db.First(&menu, menuPurchase.AdminID)
 		if menuResult.Error != nil {
 			return c.JSON(http.StatusNotFound, map[string]interface{}{"error": true, "message": "menu not found"})
 		}
 		// Membuat entri baru dalam tabel menu
-		detailOrder := model.DetailOrderUser{
-			DriverOrderUserID: menuPurchase.ListOrder,  // Total biaya tiket setelah potongan
-			InvoiceNumber:     generateInvoiceNumber(), // Simpan nomor invoice dalam tiket
+		detailOrder := model.DetailOrderAdmin{
+			DriverOrderAdminID: menuPurchase.AdminID,    // Total biaya tiket setelah potongan
+			InvoiceNumber:      generateInvoiceNumber(), // Simpan nomor invoice dalam tiket
 		}
 		if err := db.Create(&detailOrder).Error; err != nil {
 			return c.JSON(http.StatusInternalServerError, map[string]interface{}{"error": true, "message": "Failed to create menu"})
