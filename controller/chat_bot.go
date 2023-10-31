@@ -96,7 +96,7 @@ func RecommendMakan(c echo.Context, makan MakanUsecase) error {
 
 	userInput = fmt.Sprintf("Rekomendasi Makanan: %s", userInput)
 
-	answer, err := makan.RecommendMakan(userInput, os.Getenv("OPENAI_KEY"))
+	answer, err := makan.RecommendMakan(userInput, os.Getenv("OPENAI_API_KEY"))
 	if err != nil {
 		errorMessage := "Failed to generate hotel recommendations"
 		if strings.Contains(err.Error(), "rate limits exceeded") {
