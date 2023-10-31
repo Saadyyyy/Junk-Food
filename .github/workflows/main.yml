@@ -9,6 +9,9 @@ jobs:
   docker:
     runs-on: ubuntu-latest
     steps:
+      - name: Start Docker
+        run: sudo service docker start
+        if: runner.os == 'Linux'
       - name: Checkout
         uses: actions/checkout@v3
       - name: Set up QEMU
@@ -24,7 +27,7 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: .
-          file: ./dockerfile
+          file: ./Dockerfile
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/min-project:latest
 
