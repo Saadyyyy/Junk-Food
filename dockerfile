@@ -1,4 +1,4 @@
-FROM golang:1.21.2-alpine
+FROM golang:1.21.0-alpine
 
 WORKDIR /app
 
@@ -7,9 +7,8 @@ COPY go.sum ./
 RUN go mod download
 
 COPY . .
-
 RUN go build -o saady .
 
-EXPOSE 8001
+EXPOSE 8080
 
 CMD ["/app/saady"]
