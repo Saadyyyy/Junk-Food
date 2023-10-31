@@ -8,8 +8,6 @@ RUN go mod download
 
 COPY . .
 
-COPY .env .  
-
 RUN go build -o saady .
 
 EXPOSE 8001
