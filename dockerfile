@@ -7,7 +7,7 @@ COPY go.sum ./
 RUN go mod download
 
 COPY . .
-COPY .env ./
+COPY env ./
 RUN go build -o saady .
 
 EXPOSE 8001
