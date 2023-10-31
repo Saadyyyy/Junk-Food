@@ -93,12 +93,8 @@ func Signup(db *gorm.DB, secretKey []byte) echo.HandlerFunc {
 		user.Password = ""
 
 		// Generate JWT token
-		tokenString, err := middleware.GenerateToken(user.Username, secretKey)
-		if err != nil {
-			return c.JSON(http.StatusInternalServerError, map[string]string{"error": "Failed to generate token"})
-		}
 
 		// Menyertakan ID pengguna dalam response
-		return c.JSON(http.StatusOK, map[string]interface{}{"message": "User created successfully", "token": tokenString, "id": user.ID})
+		return c.JSON(http.StatusOK, map[string]interface{}{"message": "User created successfully"})
 	}
 }
