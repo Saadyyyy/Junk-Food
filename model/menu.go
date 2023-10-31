@@ -1,9 +1,14 @@
 package model
 
-import "time"
+import (
+	"time"
+
+	"gorm.io/gorm"
+)
 
 type Menu struct {
-	MenuID       uint
+	gorm.Model
+
 	NameRestoran string     `json:"name_restoran"`
 	Name         string     `json:"name"`
 	Location     string     `json:"location"`

@@ -63,7 +63,7 @@ func GetDetailTrascation(db *gorm.DB, secretKey []byte) echo.HandlerFunc {
 
 		// Membuat respons dengan detail pembelian tiket
 		detailOrders := map[string]interface{}{
-			"detail_order_ID": DetailOrder.DetailOrderID,
+			"detail_order_ID": DetailOrder.ID,
 			"user_id":         DetailOrder.UserID,
 			"menu_id":         DetailOrder.MenuID,
 			"menu_name":       menu.Name,
