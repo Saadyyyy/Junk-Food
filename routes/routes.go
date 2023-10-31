@@ -2,7 +2,6 @@ package routes
 
 import (
 	"Junk-Food/controller"
-	"log"
 	"os"
 
 	"github.com/joho/godotenv"
@@ -12,10 +11,10 @@ import (
 
 func SetupRoutes(e *echo.Echo, db *gorm.DB) {
 	// e.Use(Logger())
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatal("Error loading .env file")
-	}
+	godotenv.Load()
+	// if err != nil {
+	// 	log.Fatal("Error loading .env file")
+	// }
 
 	secretKey := []byte(os.Getenv("SECRET_JWT"))
 
