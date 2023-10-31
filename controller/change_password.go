@@ -36,7 +36,7 @@ func ChangePassword(db *gorm.DB, secretKey []byte) echo.HandlerFunc {
 		}
 
 		// Memeriksa apakah ID pengguna dalam token sesuai dengan ID pengguna dalam parameter URL
-		if userID != fmt.Sprint(user.UserID) {
+		if userID != fmt.Sprint(user.ID) {
 			return c.JSON(http.StatusForbidden, map[string]interface{}{"error": true, "message": "Access denied"})
 		}
 

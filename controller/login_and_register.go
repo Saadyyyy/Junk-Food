@@ -43,7 +43,7 @@ func Signin(db *gorm.DB, secretKey []byte) echo.HandlerFunc {
 		}
 
 		// Menyertakan ID pengguna dalam respons
-		return c.JSON(http.StatusOK, map[string]interface{}{"message": "Login successful", "token": tokenString, "id": existingUser.UserID})
+		return c.JSON(http.StatusOK, map[string]interface{}{"message": "Login successful", "token": tokenString, "id": existingUser.ID})
 	}
 }
 

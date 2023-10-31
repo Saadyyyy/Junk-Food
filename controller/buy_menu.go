@@ -81,7 +81,7 @@ func BuyMenu(db *gorm.DB, secretKey []byte) echo.HandlerFunc {
 		// Membuat entri baru dalam tabel menu
 		detailOrder := model.DetailOrder{
 			MenuID:        menu.MenuID,
-			UserID:        user.UserID,
+			UserID:        user.ID,
 			Quantity:      menuPurchase.Quantity,
 			TotalCost:     totalCost,                // Total biaya tiket setelah potongan
 			InvoiceNumber: generateInvoiceNumber(),  // Simpan nomor invoice dalam tiket

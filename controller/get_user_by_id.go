@@ -35,13 +35,13 @@ func GetUserById(db *gorm.DB, secretKey []byte) echo.HandlerFunc {
 		}
 
 		// Membandingkan apakah ID pengguna yang diminta sesuai dengan ID pengguna yang ditemukan dalam token
-		if requestedUserID != fmt.Sprint(user.UserID) {
+		if requestedUserID != fmt.Sprint(user.ID) {
 			return c.JSON(http.StatusForbidden, map[string]interface{}{"error": true, "message": "Access denied"})
 		}
 
 		// Mengembalikan data pengguna dalam format yang diinginkan
 		userData := map[string]interface{}{
-			"id":           user.UserID,
+			"id":           user.ID,
 			"username":     user.Username,
 			"phone_number": user.PhoneNumber,
 			"email":        user.Email,
