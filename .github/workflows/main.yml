@@ -6,14 +6,22 @@ on:
       - main
 
 jobs:
-  docker:
+  setup:
     runs-on: ubuntu-latest
     steps:
-      - name: Start Docker
-        run: sudo service docker start
-        if: runner.os == 'Linux'
+      - name: Set up Docker
+        run: |
+          sudo apt-get update
+          sudo apt-get -y install docker.io
+          sudo systemctl start docker
+          sudo systemctl enable docker
       - name: Checkout
         uses: actions/checkout@v3
+
+  docker:
+    runs-on: ubuntu-latest
+    needs: setup
+    steps:
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
       - name: Set up Docker Buildx
