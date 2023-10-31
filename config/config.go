@@ -46,10 +46,10 @@ func InitializeDatabase(config DatabaseConfig) (*gorm.DB, error) {
 
 func SetupRouter() *echo.Echo {
 	// Inisialisasi database
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatalf("Error loading .env file: %v", err)
-	}
+	godotenv.Load()
+	// if err != nil {
+	// 	log.Fatalf("Error loading .env file: %v", err)
+	// }
 
 	dbConfig := DatabaseConfig{
 		Host: os.Getenv("DBHOST"),
