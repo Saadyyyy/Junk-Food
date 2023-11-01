@@ -31,7 +31,7 @@ func SetupRoutes(e *echo.Echo, db *gorm.DB) {
 	e.POST("/admin/voucher", controller.CreateVoucher(db, secretKey))
 	e.GET("/user/voucher", controller.GetVouchers(db, secretKey))
 	e.GET("/user/detailOrder/:invoiceNumber", controller.GetDetailTrascation(db, secretKey))
-	e.GET("/user/detailOrder", controller.GetDetailTrascation(db, secretKey))
+	e.GET("/user/detailOrder/id", controller.GetDetailTrascation(db, secretKey))
 	makan := controller.NewMakanUsecase()
 	e.POST("/chatbot/recommend-makan", func(c echo.Context) error {
 		return controller.RecommendMakan(c, makan)
