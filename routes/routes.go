@@ -21,7 +21,6 @@ func SetupRoutes(e *echo.Echo, db *gorm.DB) {
 	// Menggunakan routes yang telah dipisahkan
 	e.POST("/signup", controller.Signup(db, secretKey))
 	e.POST("/signin", controller.Signin(db, secretKey))
-	e.GET("/user/:id", controller.GetUserById(db, secretKey))
 	e.PUT("/user/change-password/:id", controller.ChangePassword(db, secretKey))
 	e.POST("/menu/create", controller.CreateMenu(db, secretKey))
 	e.GET("/menu", controller.GetMenus(db, secretKey))
@@ -32,6 +31,7 @@ func SetupRoutes(e *echo.Echo, db *gorm.DB) {
 	e.POST("/admin/voucher", controller.CreateVoucher(db, secretKey))
 	e.GET("/user/voucher", controller.GetVouchers(db, secretKey))
 	e.GET("/user/detailOrder/:invoiceNumber", controller.GetDetailTrascation(db, secretKey))
+	e.GET("/user/detailOrder", controller.GetDetailTrascation(db, secretKey))
 	makan := controller.NewMakanUsecase()
 	e.POST("/chatbot/recommend-makan", func(c echo.Context) error {
 		return controller.RecommendMakan(c, makan)
